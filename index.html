@@ -3,13 +3,13 @@
 
 <play-list-project index="3">
     <play-list-slide top-heading="Top line heading" second-heading="Slide 1, sub-heading">
-      <p>slide 1</p>
+      <p>First slide</p>
     </play-list-slide>
     <play-list-slide top-heading="Top line heading" second-heading="Slide 1, sub-heading">
-      <p>slide 2</p>
+      <p>Second slide</p>
     </play-list-slide>
     <play-list-slide top-heading="Top line heading" second-heading="Slide 1, sub-heading">
-      <p>slide 3</p>
+      <p>THE THIRD SLIDE!!!!</p>
     </play-list-slide>
 </play-list-project>
 
@@ -47,15 +47,43 @@
 <body>
   <div id="demo">
     <h1>play-list-project</h1>
-    <!-- this is going to do whatever the tag's defaults are -->
+
     <h2>Default</h2>
-    <play-list-project></play-list-project>
+    <play-list-project>
+      <play-list-slide>
+        <p>slide 1</p>
+      </play-list-slide>
+      <play-list-slide>
+        <p>slide 2</p>
+      </play-list-slide>
+      <play-list-slide>
+        <p>slide 3</p>
+      </play-list-slide>
+    </play-list-project>
+
     <h2>Slot usage</h2>
-    <play-list-project data-accent="2" data-primary="17"><div>Sample slot content</div></play-list-project>
+    <play-list-project data-accent="2" data-primary="17">
+      <play-list-slide>
+        <p>slide 1</p>
+      </play-list-slide>
+      <play-list-slide>
+        <p>slide 2</p>
+      </play-list-slide>
+    </play-list-project>
+
     <h2>Property usage</h2>
-    <play-list-project id="example" title="Sample property title"></play-list-project>
+    <play-list-project id="example" title="Sample property title">
+      <play-list-slide>
+        <p>slide 1</p>
+      </play-list-slide>
+      <play-list-slide>
+        <p>slide 2</p>
+      </play-list-slide>
+    </play-list-project>
+
   </div>
   <script type="module" src="./play-list-project.js"></script>
+</body>
 
   <!-- Take HAX, the Web and you further down the rabbit hole -->
   <style>

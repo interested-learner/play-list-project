@@ -1,6 +1,3 @@
-// I will put the playlist indicator here (the 4 dots at the bottom that indicate what slide the playlist is on)
-import { LitElement, html, css } from "lit";
-
 /**
  * Copyright 2026 interested-learner
  * @license Apache-2.0, see LICENSE for full text.
@@ -10,64 +7,70 @@ import { DDDSuper } from "@haxtheweb/d-d-d/d-d-d.js";
 import { I18NMixin } from "@haxtheweb/i18n-manager/lib/I18NMixin.js";
 
 /**
- * `play-list-project`
+ * `playlist-indicator`
  * 
  * @demo index.html
- * @element play-list-project
+ * @element playlist-indicator
  */
-export class PlayListProject extends DDDSuper(I18NMixin(LitElement)) {
+export class PlaylistIndicator extends DDDSuper(I18NMixin(LitElement)) {
 
   static get tag() {
-    return "play-list-project";
+    return "playlist-indicator";
   }
 
   constructor() {
     super();
-    this.title = "";
-    this.t = this.t || {};
-    this.t = {
-      ...this.t,
-      title: "Title",
-    };
+        this.total = 0;
+        this.currentIndex = 0;
   }
 
-  // Lit reactive properties
   static get properties() {
     return {
       ...super.properties,
-      title: { type: String },
+      total: { type: Number },
+      currentIndex: { type: Number },
     };
   }
 
-  // Lit scoped styles
   static get styles() {
     return [super.styles,
     css`
       :host {
         display: block;
-        color: var(--ddd-theme-primary);
-        background-color: var(--ddd-theme-accent);
-        font-family: var(--ddd-font-navigation);
       }
-      .wrapper {
-        margin: var(--ddd-spacing-2);
-        padding: var(--ddd-spacing-4);
-      }
-      h3 span {
-        font-size: var(--play-list-project-label-font-size, var(--ddd-font-size-s));
-      }
-    `];
+      .dots {
+        display: flex;
+        justify-content: center;
+        gap: var(--ddd-spacing-2);
+        padding: var(--ddd-spacing-2);
+        }
+    .dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: var(--ddd-theme-default-beaverBlue);
+    opacity: 0.4;
+    cursor: pointer;
+    }
+    .dot.active {
+    opacity: 1;
+    }
+        `];
   }
 
-  // Lit render the HTML
   render() {
+    let dots = [];
+    for (let i = 0; i < this.total; i++) {
+      dots.push(html`
+      <span class="dot ${i === this.currentIndex ? 'active' : ''}"></span>
+        `);
+    }
     return html`
-<div class="wrapper">
-  <h3><span>${this.t.title}:</span> ${this.title}</h3>
-  <slot></slot>
-</div>`;
+      <div class="dots">
+        ${dots}
+      </div>`;
   }
 
 }
 
-globalThis.customElements.define(PlayListProject.tag, PlayListProject);
+globalThis.customElements.define(PlaylistIndicator.tag, PlaylistIndicator);

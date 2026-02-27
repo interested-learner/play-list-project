@@ -6,6 +6,7 @@ import { LitElement, html, css } from "lit";
 import { DDDSuper } from "@haxtheweb/d-d-d/d-d-d.js";
 import { I18NMixin } from "@haxtheweb/i18n-manager/lib/I18NMixin.js";
 import "./playlist-arrow.js";
+import "./playlist-indicator.js";
 
 /**
  * `play-list-project`
@@ -67,11 +68,14 @@ export class PlayListProject extends DDDSuper(I18NMixin(LitElement)) {
     @next-clicked="${this.next}">
   </playlist-arrow>
   <slot></slot>
+  <playlist-indicator
+    .total="${this.slides ? this.slides.length : 0}"
+    .currentIndex="${this.currentIndex}">
+  </playlist-indicator>
 </div>`;
   }
 
 next() {
-  const slides = this.renderRoot.querySelectorAll("play-list-slide");
   if (this.currentIndex < this.slides.length - 1) {
     this.currentIndex++;
     this._updateSlides();
@@ -88,16 +92,22 @@ prev() {
 
 firstUpdated() {
   this.slides = Array.from(this.querySelectorAll("play-list-slide"));
-  console.log("slides found:", this.slides.length);
   this._updateSlides();
 }
-  // this.slides = Array.from(this.quesrySelectorAll("play-list-slide"));
-  // this._updateSlides();
 
 _updateSlides() {
   this.slides.forEach((slide, i) => {
     slide.style.display = i === this.currentIndex ? "block" : "none";
-  })
+  });
+  const indexChange = new CustomEvent("play-list-index-changed", {
+  composed: true,
+  bubbles: true,
+  detail: {
+    index: this.currentIndex
+  },
+});
+this.dispatchEvent(indexChange);  
+
 }
 
 }
