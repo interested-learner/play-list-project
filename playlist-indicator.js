@@ -1,3 +1,6 @@
+// I will put the playlist indicator here (the 4 dots at the bottom that indicate what slide the playlist is on)
+import { LitElement, html, css } from "lit";
+
 /**
  * Copyright 2026 interested-learner
  * @license Apache-2.0, see LICENSE for full text.
@@ -5,7 +8,6 @@
 import { LitElement, html, css } from "lit";
 import { DDDSuper } from "@haxtheweb/d-d-d/d-d-d.js";
 import { I18NMixin } from "@haxtheweb/i18n-manager/lib/I18NMixin.js";
-import "./playlist-arrow.js";
 
 /**
  * `play-list-project`
@@ -22,8 +24,9 @@ export class PlayListProject extends DDDSuper(I18NMixin(LitElement)) {
   constructor() {
     super();
     this.title = "";
-    this.currentIndex = 0;
+    this.t = this.t || {};
     this.t = {
+      ...this.t,
       title: "Title",
     };
   }
@@ -33,7 +36,6 @@ export class PlayListProject extends DDDSuper(I18NMixin(LitElement)) {
     return {
       ...super.properties,
       title: { type: String },
-      currentIndex: { type: Number },
     };
   }
 
@@ -62,43 +64,9 @@ export class PlayListProject extends DDDSuper(I18NMixin(LitElement)) {
     return html`
 <div class="wrapper">
   <h3><span>${this.t.title}:</span> ${this.title}</h3>
-  <playlist-arrow
-    @prev-clicked="${this.prev}"
-    @next-clicked="${this.next}">
-  </playlist-arrow>
   <slot></slot>
 </div>`;
   }
-
-next() {
-  const slides = this.renderRoot.querySelectorAll("play-list-slide");
-  if (this.currentIndex < this.slides.length - 1) {
-    this.currentIndex++;
-    this._updateSlides();
-  }
-}
-
-
-prev() {
-  if (this.currentIndex > 0) {
-    this.currentIndex--;
-    this._updateSlides();
-  }
-}
-
-firstUpdated() {
-  this.slides = Array.from(this.querySelectorAll("play-list-slide"));
-  console.log("slides found:", this.slides.length);
-  this._updateSlides();
-}
-  // this.slides = Array.from(this.quesrySelectorAll("play-list-slide"));
-  // this._updateSlides();
-
-_updateSlides() {
-  this.slides.forEach((slide, i) => {
-    slide.style.display = i === this.currentIndex ? "block" : "none";
-  })
-}
 
 }
 
