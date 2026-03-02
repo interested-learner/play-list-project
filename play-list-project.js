@@ -65,6 +65,8 @@ export class PlayListProject extends DDDSuper(I18NMixin(LitElement)) {
 <div class="wrapper">
   <h3><span>${this.t.title}:</span> ${this.title}</h3>
   <playlist-arrow
+    .index="${this.currentIndex}"
+    .total="${this.slides ? this.slides.length : 0}"
     @prev-clicked="${this.prev}"
     @next-clicked="${this.next}">
   </playlist-arrow>

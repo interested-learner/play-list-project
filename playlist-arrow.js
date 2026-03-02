@@ -22,7 +22,7 @@ export class PlayListArrow extends DDDSuper(I18NMixin(LitElement)) {
 
   constructor() {
     super();
-    index = 0;
+    this.index = 0;
   }
 
   // Lit reactive properties
@@ -30,6 +30,7 @@ export class PlayListArrow extends DDDSuper(I18NMixin(LitElement)) {
     return {
       ...super.properties,
       index : { type: Number },
+      total : { type: Number },
     };
   }
 
@@ -58,6 +59,10 @@ export class PlayListArrow extends DDDSuper(I18NMixin(LitElement)) {
       button:hover {
         opacity: 0.8;
       }
+      button:disabled {
+        opacity: 0.3;
+        cursor: not-allowed;
+      }
     `];
   }
 
@@ -67,8 +72,12 @@ export class PlayListArrow extends DDDSuper(I18NMixin(LitElement)) {
   render() {
     return html`
     <div class="wrapper">
-        <button class="prev" @click=${() => this.dispatchEvent(new CustomEvent('prev-clicked', {bubbles: true, composed: true }))}>Previous</button>
-        <button class="next" @click=${() => this.dispatchEvent(new CustomEvent('next-clicked', {bubbles: true, composed: true}))}>Next</button>
+        <button class="prev" 
+        ?disabled="${this.index === 0}"
+        @click=${() => this.dispatchEvent(new CustomEvent('prev-clicked', {bubbles: true, composed: true }))}>Previous</button>
+        <button class="next" 
+        ?disabled="${this.index === this.total - 1}"
+        @click=${() => this.dispatchEvent(new CustomEvent('next-clicked', {bubbles: true, composed: true}))}>Next</button>
     </div>
     `;
   }
