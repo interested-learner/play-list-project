@@ -19,6 +19,7 @@ export class PlayListSlide extends DDDSuper(I18NMixin(LitElement)) {
   static get properties() {
     return {
       ...super.properties,
+      active: { type: Boolean, reflect: true },
     };
   }
 

@@ -62,7 +62,7 @@ export class PlaylistIndicator extends DDDSuper(I18NMixin(LitElement)) {
     let dots = [];
     for (let i = 0; i < this.total; i++) {
       dots.push(html`
-      <span class="dot ${i === this.currentIndex ? 'active' : ''}"></span>
+      <span @click="${this._handleDotClick}" data-index="${i}" class="dot ${i === this.currentIndex ? 'active' : ''}"></span>
         `);
     }
     return html`
@@ -70,6 +70,17 @@ export class PlaylistIndicator extends DDDSuper(I18NMixin(LitElement)) {
         ${dots}
       </div>`;
   }
+
+_handleDotClick(e) {
+  const indexChange = new CustomEvent("play-list-index-changed", {
+    composed: true,
+    bubbles: true,
+    detail: {
+      index: parseInt(e.target.dataset.index)
+    },
+  });
+  this.dispatchEvent(indexChange); 
+}
 
 }
 

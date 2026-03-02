@@ -22,12 +22,14 @@ export class PlayListArrow extends DDDSuper(I18NMixin(LitElement)) {
 
   constructor() {
     super();
+    index = 0;
   }
 
   // Lit reactive properties
   static get properties() {
     return {
       ...super.properties,
+      index : { type: Number },
     };
   }
 
@@ -59,7 +61,9 @@ export class PlayListArrow extends DDDSuper(I18NMixin(LitElement)) {
     `];
   }
 
-  // Lit render the HTML
+
+
+  // Lit render the HTML (MAKE SURE THE BUTTONS LISTEN TO INDEX AND MAKE IT DISABLED IF IT IS THE FIRST OR LAST SLIDE)
   render() {
     return html`
     <div class="wrapper">
@@ -68,6 +72,7 @@ export class PlayListArrow extends DDDSuper(I18NMixin(LitElement)) {
     </div>
     `;
   }
+
 
 }
 

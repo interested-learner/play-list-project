@@ -27,6 +27,7 @@ export class PlayListProject extends DDDSuper(I18NMixin(LitElement)) {
     this.t = {
       title: "Title",
     };
+    this.slides = Array.from(this.querySelectorAll("play-list-slide"));
   }
 
   // Lit reactive properties
@@ -69,10 +70,16 @@ export class PlayListProject extends DDDSuper(I18NMixin(LitElement)) {
   </playlist-arrow>
   <slot></slot>
   <playlist-indicator
+    @play-list-index-changed="${this.handleEvent}"
     .total="${this.slides ? this.slides.length : 0}"
     .currentIndex="${this.currentIndex}">
   </playlist-indicator>
 </div>`;
+  }
+
+  handleEvent(e) {
+    this.currentIndex = e.detail.index;
+    this._updateSlides();
   }
 
 next() {
@@ -82,7 +89,6 @@ next() {
   }
 }
 
-
 prev() {
   if (this.currentIndex > 0) {
     this.currentIndex--;
@@ -91,7 +97,6 @@ prev() {
 }
 
 firstUpdated() {
-  this.slides = Array.from(this.querySelectorAll("play-list-slide"));
   this._updateSlides();
 }
 
@@ -99,14 +104,6 @@ _updateSlides() {
   this.slides.forEach((slide, i) => {
     slide.style.display = i === this.currentIndex ? "block" : "none";
   });
-  const indexChange = new CustomEvent("play-list-index-changed", {
-  composed: true,
-  bubbles: true,
-  detail: {
-    index: this.currentIndex
-  },
-});
-this.dispatchEvent(indexChange);  
 
 }
 
