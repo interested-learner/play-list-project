@@ -28,6 +28,13 @@ export class PlayListSlide extends DDDSuper(I18NMixin(LitElement)) {
     css`
       :host {
         display: block;
+        flex-direction: row;
+      }
+      .slide {
+        width: 50%;          
+        max-height: 200px;     
+        overflow-y: auto;     
+        padding: var(--ddd-spacing-2);
       }
     `];
   }

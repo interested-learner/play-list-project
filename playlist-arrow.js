@@ -23,6 +23,7 @@ export class PlayListArrow extends DDDSuper(I18NMixin(LitElement)) {
   constructor() {
     super();
     this.index = 0;
+    this.total = 0;
   }
 
   // Lit reactive properties
@@ -49,12 +50,13 @@ export class PlayListArrow extends DDDSuper(I18NMixin(LitElement)) {
       }
       button {
         background-color: var(--ddd-theme-default-beaverBlue);
-        color: white;
+        color: var(--ddd-theme-default-white);
         border: none;
         padding: var(--ddd-spacing-2) var(--ddd-spacing-4);
         border-radius: var(--ddd-radius-sm);
         cursor: pointer;
         font-size: var(--ddd-font-size-s);
+        margin-left: -90px
       }
       button:hover {
         opacity: 0.8;
@@ -66,9 +68,7 @@ export class PlayListArrow extends DDDSuper(I18NMixin(LitElement)) {
     `];
   }
 
-
-
-  // Lit render the HTML (MAKE SURE THE BUTTONS LISTEN TO INDEX AND MAKE IT DISABLED IF IT IS THE FIRST OR LAST SLIDE)
+  // Lit render the HTML
   render() {
     return html`
     <div class="wrapper">

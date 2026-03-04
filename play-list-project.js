@@ -48,6 +48,7 @@ export class PlayListProject extends DDDSuper(I18NMixin(LitElement)) {
         color: var(--ddd-theme-primary);
         background-color: var(--ddd-theme-accent);
         font-family: var(--ddd-font-navigation);
+        max-width: 900px;
       }
       .wrapper {
         margin: var(--ddd-spacing-2);
@@ -64,13 +65,13 @@ export class PlayListProject extends DDDSuper(I18NMixin(LitElement)) {
     return html`
 <div class="wrapper">
   <h3><span>${this.t.title}:</span> ${this.title}</h3>
+  <slot></slot>
   <playlist-arrow
     .index="${this.currentIndex}"
     .total="${this.slides ? this.slides.length : 0}"
     @prev-clicked="${this.prev}"
     @next-clicked="${this.next}">
   </playlist-arrow>
-  <slot></slot>
   <playlist-indicator
     @play-list-index-changed="${this.handleEvent}"
     .total="${this.slides ? this.slides.length : 0}"
