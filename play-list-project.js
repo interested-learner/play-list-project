@@ -7,6 +7,7 @@ import { DDDSuper } from "@haxtheweb/d-d-d/d-d-d.js";
 import { I18NMixin } from "@haxtheweb/i18n-manager/lib/I18NMixin.js";
 import "./playlist-arrow.js";
 import "./playlist-indicator.js";
+import "./play-list-slide.js";
 
 /**
  * `play-list-project`
@@ -25,7 +26,7 @@ export class PlayListProject extends DDDSuper(I18NMixin(LitElement)) {
     this.title = "";
     this.currentIndex = 0;
     this.t = {
-      title: "Title",
+      title: "",
     };
     this.slides = Array.from(this.querySelectorAll("play-list-slide"));
   }
@@ -48,11 +49,21 @@ export class PlayListProject extends DDDSuper(I18NMixin(LitElement)) {
         color: var(--ddd-theme-primary);
         background-color: var(--ddd-theme-accent);
         font-family: var(--ddd-font-navigation);
-        max-width: 900px;
+        width: 750px;
       }
       .wrapper {
         margin: var(--ddd-spacing-2);
         padding: var(--ddd-spacing-4);
+      }
+      .row {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        margin-left: -45px;
+        margin-right: -45px;
+      }
+      .slide-content {
+        flex: 1;
       }
       h3 span {
         font-size: var(--play-list-project-label-font-size, var(--ddd-font-size-s));
@@ -63,21 +74,28 @@ export class PlayListProject extends DDDSuper(I18NMixin(LitElement)) {
   // Lit render the HTML
   render() {
     return html`
-<div class="wrapper">
-  <h3><span>${this.t.title}:</span> ${this.title}</h3>
-  <slot></slot>
-  <playlist-arrow
-    .index="${this.currentIndex}"
-    .total="${this.slides ? this.slides.length : 0}"
-    @prev-clicked="${this.prev}"
-    @next-clicked="${this.next}">
-  </playlist-arrow>
-  <playlist-indicator
-    @play-list-index-changed="${this.handleEvent}"
-    .total="${this.slides ? this.slides.length : 0}"
-    .currentIndex="${this.currentIndex}">
-  </playlist-indicator>
-</div>`;
+      <div class="wrapper">
+        <div class="row">
+          <playlist-arrow direction="prev"
+            .index="${this.currentIndex}"
+            .total="${this.slides ? this.slides.length : 0}"
+            @prev-clicked="${this.prev}">
+          </playlist-arrow>
+          <div class="slide-content">
+            <slot></slot>
+          </div>
+          <playlist-arrow direction="next"
+            .index="${this.currentIndex}"
+            .total="${this.slides ? this.slides.length : 0}"
+            @next-clicked="${this.next}">
+          </playlist-arrow>
+        </div>
+        <playlist-indicator
+          @play-list-index-changed="${this.handleEvent}"
+          .total="${this.slides ? this.slides.length : 0}"
+          .currentIndex="${this.currentIndex}">
+        </playlist-indicator>
+      </div>`;
   }
 
   handleEvent(e) {

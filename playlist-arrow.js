@@ -24,6 +24,7 @@ export class PlayListArrow extends DDDSuper(I18NMixin(LitElement)) {
     super();
     this.index = 0;
     this.total = 0;
+    this.direction = "next"; // or "prev"
   }
 
   // Lit reactive properties
@@ -32,6 +33,7 @@ export class PlayListArrow extends DDDSuper(I18NMixin(LitElement)) {
       ...super.properties,
       index : { type: Number },
       total : { type: Number },
+      direction : { type: String },
     };
   }
 
@@ -49,14 +51,17 @@ export class PlayListArrow extends DDDSuper(I18NMixin(LitElement)) {
         padding: var(--ddd-spacing-2);
       }
       button {
-        background-color: var(--ddd-theme-default-beaverBlue);
-        color: var(--ddd-theme-default-white);
-        border: none;
-        padding: var(--ddd-spacing-2) var(--ddd-spacing-4);
-        border-radius: var(--ddd-radius-sm);
+        background-color: white;
+        color: var(--ddd-theme-default-beaverBlue);
+        border: 2px solid var(--ddd-theme-default-beaverBlue);
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
         cursor: pointer;
-        font-size: var(--ddd-font-size-s);
-        margin-left: -90px
+        font-size: 18px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
       }
       button:hover {
         opacity: 0.8;
@@ -64,25 +69,27 @@ export class PlayListArrow extends DDDSuper(I18NMixin(LitElement)) {
       button:disabled {
         opacity: 0.3;
         cursor: not-allowed;
+        background-color: white;
       }
     `];
   }
 
   // Lit render the HTML
   render() {
-    return html`
-    <div class="wrapper">
-        <button class="prev" 
-        ?disabled="${this.index === 0}"
-        @click=${() => this.dispatchEvent(new CustomEvent('prev-clicked', {bubbles: true, composed: true }))}>Previous</button>
-        <button class="next" 
-        ?disabled="${this.index === this.total - 1}"
-        @click=${() => this.dispatchEvent(new CustomEvent('next-clicked', {bubbles: true, composed: true}))}>Next</button>
-    </div>
-    `;
+    if (this.direction === "prev") {
+      return html`
+        <button ?disabled="${this.index === 0}"
+          @click=${() => this.dispatchEvent(new CustomEvent('prev-clicked', {bubbles: true, composed: true}))}>
+          &#10094;
+        </button>`;
+    } else {
+      return html`
+        <button ?disabled="${this.index === this.total - 1}"
+          @click=${() => this.dispatchEvent(new CustomEvent('next-clicked', {bubbles: true, composed: true}))}>
+          &#10095;
+        </button>`;
+    }
   }
-
-
 }
 
 globalThis.customElements.define(PlayListArrow.tag, PlayListArrow);

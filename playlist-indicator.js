@@ -40,7 +40,7 @@ export class PlaylistIndicator extends DDDSuper(I18NMixin(LitElement)) {
       }
       .dots {
         display: flex;
-        justify-content: center;
+        justify-content: flex-start;
         gap: var(--ddd-spacing-2);
         padding: var(--ddd-spacing-2);
         }

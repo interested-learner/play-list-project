@@ -14,12 +14,15 @@ export class PlayListSlide extends DDDSuper(I18NMixin(LitElement)) {
 
   constructor() {
     super();
+    this.topHeading = "";
+    this.secondHeading = "";
   }
 
   static get properties() {
     return {
       ...super.properties,
-      active: { type: Boolean, reflect: true },
+      topHeading: { type: String, attribute: "top-heading" },
+      secondHeading: {type: String, attribute: "second-heading" },
     };
   }
 
@@ -28,13 +31,31 @@ export class PlayListSlide extends DDDSuper(I18NMixin(LitElement)) {
     css`
       :host {
         display: block;
-        flex-direction: row;
       }
-      .slide {
-        width: 50%;          
-        max-height: 200px;     
-        overflow-y: auto;     
+      .slide {  
+        width: 70%;
         padding: var(--ddd-spacing-2);
+      .content {
+        height: 100px;
+        overflow-y: auto;
+      }
+      .top-heading {
+        font-size: var(--ddd-font-size-xs);
+        font-weight: var(--ddd-font-weight-bold);
+        text-transform: uppercase;
+        margin: 0;
+        color: var(--ddd-theme-default-beaverBlue);
+      }
+      .second-heading {
+        font-size: var(--ddd-font-size-3xl);
+        font-weight: var(--ddd-font-weight-bold);
+        margin: 0;
+        color: var(--ddd-theme-default-nittanyNavy);
+      }
+      .line {
+        border: 1px solid var(--ddd-theme-default-beaverBlue);
+        width: 75px;
+        margin: var(--ddd-spacing-2) 0;
       }
     `];
   }
@@ -42,7 +63,12 @@ export class PlayListSlide extends DDDSuper(I18NMixin(LitElement)) {
   render() {
     return html`
       <div class="slide">
-        <slot></slot>
+        <p class="top-heading">${this.topHeading}</p>
+        <h2 class="second-heading">${this.secondHeading}</h2>
+        <hr class="line">
+        <div class="content">
+          <slot></slot>
+        </div>
       </div>`;
   }
 
