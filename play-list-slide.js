@@ -33,11 +33,13 @@ export class PlayListSlide extends DDDSuper(I18NMixin(LitElement)) {
         display: block;
       }
       .slide {  
-        width: 70%;
+        width: 60%;
         padding: var(--ddd-spacing-2);
+      }
       .content {
-        height: 100px;
-        overflow-y: auto;
+        height: 175px;
+        max-height: 175px;
+        overflow-y: scroll;
       }
       .top-heading {
         font-size: var(--ddd-font-size-xs);
@@ -57,6 +59,19 @@ export class PlayListSlide extends DDDSuper(I18NMixin(LitElement)) {
         width: 75px;
         margin: var(--ddd-spacing-2) 0;
       }
+      .content::-webkit-scrollbar {
+  width: 12px;               /* width of the entire scrollbar */
+}
+
+.content::-webkit-scrollbar-track {
+  background: lightgray;        /* color of the tracking area */
+}
+
+.content::-webkit-scrollbar-thumb {
+  background-color: var(--ddd-theme-default-beaverBlue);    /* color of the scroll thumb */
+  border-radius: 20px;       /* roundness of the scroll thumb */
+  border: 3px var(--ddd-theme-default-beaverBlue);  /* creates padding around scroll thumb */
+}
     `];
   }
 

@@ -47,9 +47,10 @@ export class PlayListProject extends DDDSuper(I18NMixin(LitElement)) {
       :host {
         display: block;
         color: var(--ddd-theme-primary);
-        background-color: var(--ddd-theme-accent);
+        background-color: var(--ddd-theme-default-slateMaxLight);
         font-family: var(--ddd-font-navigation);
-        width: 750px;
+        width: 850px;
+        height: 410px; 
       }
       .wrapper {
         margin: var(--ddd-spacing-2);
@@ -68,6 +69,8 @@ export class PlayListProject extends DDDSuper(I18NMixin(LitElement)) {
       h3 span {
         font-size: var(--play-list-project-label-font-size, var(--ddd-font-size-s));
       }
+
+      
     `];
   }
 
